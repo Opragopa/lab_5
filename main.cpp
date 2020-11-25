@@ -5,89 +5,12 @@
 
 //10) Количество столбцов, содержащих повторяющиеся элементы
 
-int** creatingMatrix(int i, int j) // создание матрицы
-{
-	//выделение памяти под двумерный массив;
-	int** output = new int* [i]; // i строк
-	for (int count = 0; count < i; count++)
-	{
-		output[count] = new int[j]; // j столбцов
-	}
-
-	//инициализация двумерного массива;
-	for (int row = 0; row < i; row++)
-	{
-		for (int col = 0; col < j; col++)
-		{
-			output[row][col] = rand() % 5 + 1; // случайно генерируемые числа
-		}
-	}
-	std::cout << "\n";
-	return output;
-}
+int** creatingMatrix(int i, int j);// прототипы функций
 template < typename T >
-void printMatrix(T& address, int rows, int columns)  //вывод матрицы на в cout
-{ 
-	for (int i = 0; i < rows; i++) 
-	{
-		for (int j = 0; j < columns; j++) 
-		{
-			std::cout << "(" << i << "," << j << ") = " << address[i][j] << "\t";
-			//std::cout << output << "\t";
-			//std::cout << matrix[i][j] << "\t";
-		}
-		std::cout << '\n';
-	}
-}
-
-// 0 - false
-// 1 - true
-bool inputValidation()
-{
-	bool isCorrect = 1;
-	while (isCorrect)
-	{
-		if (std::cin.fail())
-		{
-			std::cin.clear();
-			std::cout << "Incorrect value, please try again.\n";
-			std::cin.get();
-			isCorrect = 0;
-			continue;
-		}
-		else
-		{
-			isCorrect = 1;
-			break;
-		}
-	}
-	return isCorrect;
-}
-
+void printMatrix(T& address, int rows, int columns);
 template < typename T >
-void solveFunc(T& address, int row, int col) // проверка на то, есть ли в столбцах повторяющиеся элементы
-{
-	int count = 0;
-	for (int j = 0; j < col; j++)
-	{
-		for (int i = 0; i < row; i++)
-		{
-			for (int x = i+1; x < row; x++)	//brute force without repetitions
-			{
-				if (address[x][j] == address[i][j])
-				{
-					count++;
-					std::cout << "\n " << count <<")\t(" << i << "," << j << ") AND ";
-					std::cout << "(" << x << "," << j << ")  is equal";
-					break;
-				}
-			}
-			break;
-		}
-	}
-	std::cout << "\nКоличество столбцов: " << count;
-}
-
+void solveFunc(T& address, int row, int col);
+bool inputValidation();
 
 
 int main()
@@ -136,4 +59,86 @@ int main()
 		matrix = NULL;
 	}
 	return -1;
+}
+
+template < typename T >
+void solveFunc(T& address, int row, int col) // проверка на то, есть ли в столбцах повторяющиеся элементы
+{
+	int count = 0;
+	for (int j = 0; j < col; j++)
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int x = i + 1; x < row; x++)	//brute force without repetitions
+			{
+				if (address[x][j] == address[i][j])
+				{
+					count++;
+					std::cout << "\n " << count << ")\t(" << i << "," << j << ") AND ";
+					std::cout << "(" << x << "," << j << ")  is equal";
+					break;
+				}
+			}
+			break;
+		}
+	}
+	std::cout << "\nКоличество столбцов: " << count;
+}
+
+// 0 - false
+// 1 - true
+bool inputValidation()
+{
+	bool isCorrect = 1;
+	while (isCorrect)
+	{
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cout << "Incorrect value, please try again.\n";
+			std::cin.get();
+			isCorrect = 0;
+			continue;
+		}
+		else
+		{
+			isCorrect = 1;
+			break;
+		}
+	}
+	return isCorrect;
+}
+
+template < typename T >
+void printMatrix(T& address, int rows, int columns)  //вывод матрицы на в cout
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			std::cout << "(" << i << "," << j << ") = " << address[i][j] << "\t";
+		}
+		std::cout << '\n';
+	}
+}
+
+int** creatingMatrix(int i, int j) // создание матрицы
+{
+	//выделение памяти под двумерный массив;
+	int** output = new int* [i]; // i строк
+	for (int count = 0; count < i; count++)
+	{
+		output[count] = new int[j]; // j столбцов
+	}
+
+	//инициализация двумерного массива;
+	for (int row = 0; row < i; row++)
+	{
+		for (int col = 0; col < j; col++)
+		{
+			output[row][col] = rand() % 5 + 1;
+		}
+	}
+	std::cout << "\n";
+	return output;
 }
